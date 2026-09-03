@@ -2,4 +2,9 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
-    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
+    # Pinned before upstream's "explicit ZMK compat" board-variant check
+    # (zmkfirmware/zmk#3265, #3277), which crashes with `KeyError: 'qualifiers'`
+    # against out-of-tree boards like Glove80 whose zephyr west doesn't
+    # support the `{qualifiers}` boards format field. Safe to bump forward
+    # once upstream fixes that check for out-of-tree boards.
+    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@2a9ac3ba7f23e3fd6c6efef986f35fc2b9c55bf3
